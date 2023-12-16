@@ -46,6 +46,18 @@ class UserController implements Crud {
 
     return response.status(httpStatus).send({ messageFromUpdate });
   };
+
+  getById = async (request: Request, response: Response) => {
+    const { id } = request.params;
+  
+    const { httpStatus, value } = await this.citi.getById(id);
+  
+    if (httpStatus === 404) {
+      return response.status(httpStatus).send({ message: "User not found" });
+    }
+  
+    return response.status(httpStatus).send(value);
+  };
 }
 
 export default new UserController();
